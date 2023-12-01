@@ -1,86 +1,27 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= webpackConfig.output.publicPath %>apple-icon.png"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="<%= webpackConfig.output.publicPath %>favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Light Bootstrap Dashboard Vue</title>
+    <!-- Bootstrap core CSS     -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Gafo - Dashboard</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{!! asset('admin/vendor/fontawesome-free/css/all.min.css') !!}" rel="stylesheet" type="text/css">
+    <!--     Fonts and icons     -->
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{!! asset('admin/css/sb-admin-2.min.css') !!}" rel="stylesheet">
-
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
     @vite('resources/sass/app.scss')
-
-</head>
-
-<body > 
-    <div id="admin">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-
-            <headertop></headertop>
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-            <index></index>
-            <footerbottom></footerbottom>
-            </div>
-        </div>
-        <!-- End of Page Wrapper -->
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  </head>
+  <body>
+    <div id="app">
+       
     </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="{!! asset('admin/vendor/jquery/jquery.min.js') !!}"></script>
-    <script src="{!! asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{!! asset('admin/vendor/jquery-easing/jquery.easing.min.js') !!}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{!! asset('admin/js/sb-admin-2.min.js') !!}"></script>
-
-    <!-- Page level plugins -->
-    <!-- <script src="{!! asset('admin/vendor/chart.js/Chart.min.js') !!}"></script> -->
-
-    <!-- Page level custom scripts -->
-    <!-- <script src="{!! asset('admin/js/demo/chart-area-demo.js') !!}"></script>
-    <script src="{!! asset('admin/js/demo/chart-pie-demo.js') !!}"></script> -->
-</body>
-
-@vite('resources/js/app.js')
-
+    <!-- built files will be auto injected -->
+  </body>
+    @vite('resources/js/app.js')
 </html>
