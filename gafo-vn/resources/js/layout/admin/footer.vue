@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
 <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -11,7 +7,11 @@
                 </div>
             </footer>
 </template>
-
+<script >
+    export default {
+       name:'Footerbottom',
+    }
+</script>
 <style scoped>
 
 </style>
