@@ -1,19 +1,19 @@
 import './bootstrap';
 import {createApp} from 'vue';
-import search from './client/search.vue';
-import cart from './client/cart.vue';
+// import search from './client/search.vue';
+// import cart from './client/cart.vue';
 import admin from './admin.vue';
 
 const app = createApp({});
 
 const components = [
-    search,
-    cart
+    // search,
+    // cart
 ];
 
 components.forEach(component => app.component(component.name, component));
 
-app.mount('#app');
+// app.mount('#app');
 
 
 // setup component to admin

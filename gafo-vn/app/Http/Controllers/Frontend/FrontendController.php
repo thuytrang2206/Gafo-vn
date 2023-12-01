@@ -14,9 +14,7 @@ class FrontendController extends Controller
         return view('client.index');
     }
 
-    public function product(Request  $request){
-        return view('frontend/pages/product');
-    }
+    
     public function about(Request  $request){
         return view('frontend/pages/about');
     }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
-
+use App\Http\Controllers\Frontend\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +26,4 @@ use App\Http\Controllers\Frontend\FrontendController;
 // Route::get('/lien-he', 'App\Http\Controllers\Frontend\FrontendController@contact')->name('contact');
 // Route::get('/', 'App\Http\Controllers\Backend\BackendController@index')->name('index');
 Route::get('/', [FrontendController::class, 'index']);
+Route::get('/{slug}', [ProductController::class, 'index']);

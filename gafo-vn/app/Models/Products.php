@@ -13,7 +13,7 @@ class Products extends Model
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->text('name');
-            $table->text('describe');
+            $table->text('describeS');
             $table->float('price');
             $table->int('id_typeproduct');
 

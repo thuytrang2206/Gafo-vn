@@ -1,6 +1,6 @@
 
-@extends('layouts.layout_master')
-@include('partial.productheader')
+@extends('layouts.client.layout_master')
+@include('layouts.client.productheader')
 @section('content')
 
     <!-- Product Start -->
