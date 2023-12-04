@@ -96,11 +96,20 @@
         </ul>
         <!-- End of Sidebar -->
         
+        <content></content>
+        <footerbottom></footerbottom>
 </template>
 <script >
+    import Footerbottom from './footer.vue'
+    import Content from '../../admin/index.vue'
     export default {
-       name:'Headertop',
+        name:'Headertop',
+        components: {
+                Footerbottom,
+                Content,
+        },
     }
+
 </script>
 <style scoped>
 
