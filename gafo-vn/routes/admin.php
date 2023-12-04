@@ -15,5 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', [BackendController::class, 'index']);
-
+ Route::get('/dashboard', [BackendController::class, 'index']);

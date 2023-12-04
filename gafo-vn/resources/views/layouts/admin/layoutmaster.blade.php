@@ -26,17 +26,7 @@
 
 <body > 
     <div id="admin">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-
-            <headertop></headertop>
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-            <index></index>
-            <footerbottom></footerbottom>
-            </div>
-        </div>
-        <!-- End of Page Wrapper -->
+       
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">

@@ -1,11 +1,21 @@
 import Headertop from '../layout/admin/header.vue'
 
-
+import Product from '../admin/product.vue'
 
 const routes = [
   {
-    path: '/admin/dashboard',
+    path: '/',
     component: Headertop,
+    children: [
+        {
+          path: 'product',
+          component: Product
+        },  
+      ]
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: Error,
   },
 ]
 

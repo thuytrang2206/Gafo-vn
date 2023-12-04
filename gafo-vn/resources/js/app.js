@@ -1,32 +1,27 @@
-import './bootstrap';
 import {createApp} from 'vue';
-// import search from './client/search.vue';
-// import cart from './client/cart.vue';
-import admin from './admin.vue';
-// import Headertop from './layout/admin/header.vue'
-// import Footerbottom from './layout/admin/footer.vue'
-import routes from "./routes/routes";
-import*as VueRouter from "vue-router";
-const app = createApp({});
-// Vue.use(VueRouter);
-const router =VueRouter.createRouter({
-    history: VueRouter.createWebHashHistory(),
-    routes, // short for routes: routes
-  });
-  
-// const components = [
-//     // search,
-//     // cart
-// ];
-// app.component('headertop',Headertop);
-// app.component('index',admin);
-// app.component('footerbottom',Footerbottom);
-//components.forEach(component => app.component(component.name, component));
+import * as VueRouter from 'vue-router';
+import App from "./admin.vue";
+// LightBootstrap plugin
+import './bootstrap';
 
- app.mount('#admin');
+// router setup
+import routes from "./routes/routes.js";
 
+// import "./registerServiceWorker";
+// plugin setup
+//window.vue=Vue.use(VueRouter);
+// Vue.use(LightBootstrap);
+// configure router
+const router =  VueRouter.createRouter({
+  routes, // short for routes: routes
+   history: VueRouter.createWebHashHistory(),
+   
+});
 
-// setup component to admin
-
-// const appAdmin = createApp(Headertop);
-// appAdmin.mount('#admin');
+/* eslint-disable no-new */
+// new Vue({
+//   el: "#app",
+//   render: (h) => h(App),
+//   router,
+// });
+createApp(App).use(router).mount('#admin')

@@ -1,15 +1,20 @@
 
 <template>
-     <!-- Sidebar -->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <router-link to="/">
+            <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Gafo Admin</div>
-            </a>
+            </a> -->
+            <div class="sidebar-brand-text mx-3">Gafo Admin</div>
+            </router-link>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -31,17 +36,21 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                  <font-awesome-icon :icon="['fab', 'product-hunt']" />
-                    <span>Quản lý về sản phẩm</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Loại sản phẩm</a>
-                        <a class="collapse-item" href="cards.html">Sản phẩm</a>
-                    </div>
-                </div>
+                <router-link to="/product" class="top-bar-link">
+                    <span class="nav-link collapsed">Products</span>
+                </router-link>
+
+                <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded"> -->
+                        <!-- <a class="collapse-item" href="/admin/catagory">Loại sản phẩm</a> -->
+                        <!-- <router-link class="link" to="/product">
+                            <p class="item-menu">
+                                 ản phẩm
+                            </p>
+                        </router-link> -->
+                        <!-- <a class="collapse-item" href="cards.html">Sản phẩm</a> -->
+                    <!-- </div>
+                </div> -->
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -92,25 +101,51 @@
                     <span>Quản lý nhân viên </span></a>
             </li>
 
-           
+
         </ul>
         <!-- End of Sidebar -->
-        
-        <content></content>
-        <footerbottom></footerbottom>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+               <search></search>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <content></content>
+
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footerbottom></footerbottom>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+
+    </div>
+    <!-- End of Page Wrapper -->
 </template>
 <script >
-    import Footerbottom from './footer.vue'
-    import Content from '../../admin/index.vue'
-    export default {
-        name:'Headertop',
-        components: {
-                Footerbottom,
-                Content,
-        },
-    }
+import Footerbottom from './footer.vue'
+import Content from '../../admin/index.vue'
+import Search from '../../admin/search.vue'
+export default {
+    name: 'Headertop',
+    components: {
+        Footerbottom,
+        Content,
+        Search,
+    },
+}
 
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
