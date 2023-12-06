@@ -12,4 +12,5 @@ class BackendController extends Controller
     {
         return view('admin.dashboard.index');
     }
+    
 }

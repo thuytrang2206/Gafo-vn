@@ -1,17 +1,53 @@
-import Headertop from '../layout/admin/header.vue'
+import Content from '../admin/index.vue'
 
-import Product from '../admin/product.vue'
+import Product from '../admin/product/product.vue'
+import Category from '../admin/category.vue'
+import Employee from '../admin/employee.vue'
+import Customer from '../admin/customer.vue'
+import New from '../admin/new.vue'
+import Newstype from '../admin/newstype.vue'
+import Revenue from '../admin/revenue.vue'
 
 const routes = [
   {
     path: '/',
-    component: Headertop,
-    children: [
-        {
-          path: 'product',
-          component: Product
-        },  
-      ]
+    component: Content,
+    // children: [
+    //     {
+    //       path: 'product',
+    //       name:'product',
+    //       component: Product
+    //     },  
+    //   ]
+  },
+ 
+  {
+      path: '/product',
+      component: Product
+  },
+  {
+      path: '/category',
+      component: Category
+  },
+  {
+    path: '/employee',
+    component: Employee
+  },
+  {
+    path: '/customer',
+    component: Customer
+  },
+  {
+    path: '/new',
+    component: New
+  },
+  {
+    path: '/newstype',
+    component: Newstype
+  },
+  {
+    path: '/revenue',
+    component: Revenue
   },
   {
     path: '/:catchAll(.*)',

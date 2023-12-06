@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\BackendController;
-
+use App\Http\Controllers\Backend\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
  Route::get('/dashboard', [BackendController::class, 'index']);
+
+//  Route::resource('product', ProductController::class);
+Route::get('/product', [ProductController::class, 'product']);
