@@ -37,7 +37,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create([
+            'NameProd'     => $request->input('NameProd'),
+            'Price'    => $request->input('Price'),
+            'Count' => $request->input('Count'),
+            // 'Describes'=>$request->input('Describes'),
+        ]);
+        //$product->save();
+        return response()->json($product);
     }
 
     /**
@@ -71,7 +78,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->NameProd =  $request->input('NameProd');
+        $product->Price = $request->input('Price');
+        $product-> Count=  $request->input('Count');
+        $product->save();
+    
+        return response([
+            'product' => $product
+        ], 200);
     }
 
     /**
@@ -82,6 +98,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return response([
+            'result' => 'success'
+        ], 200);
     }
 }
