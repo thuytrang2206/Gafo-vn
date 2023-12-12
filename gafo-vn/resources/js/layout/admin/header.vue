@@ -1,10 +1,10 @@
 
 <template>
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <router-link to="/" class="sidebar-brand d-flex align-items-center justify-content-center">
+        <!-- Sidebar - Brand -->
+        <router-link to="/" class="sidebar-brand d-flex align-items-center justify-content-center">
             <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
@@ -12,80 +12,77 @@
                 <div class="sidebar-brand-text mx-3">Gafo Admin</div>
             </a> -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">Gafo Admin</div>
-            </router-link>
+        </router-link>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse"  data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <span><font-awesome-icon :icon="['fas', 'gear']" /> General </span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <router-link to="/product" class="collapse-item">
+                        <span >Sản phẩm</span>
+                    </router-link>
+                    <router-link to="/category" class="collapse-item">
+                        <span >Loại sản phẩm</span>
+                    </router-link>
+                    <router-link to="/newstype" class="collapse-item">
+                        <span >Loại tin</span>
+                    </router-link>
+                    <router-link to="/new" class="collapse-item">
+                        <span >Tin tức</span>
+                    </router-link>
+                    <router-link to="/customer" class="collapse-item">
+                        <span >Khách hàng</span>
+                    </router-link>
+                    <router-link to="/employee" class="collapse-item">
+                        <span >Nhân viên</span>
+                    </router-link>
+                </div>
             </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                
+                <span> <font-awesome-icon :icon="['fas', 'display']" /> Giao diện </span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <router-link to="/slidebar" class="collapse-item">
+                        <span >Slidebar</span>
+                    </router-link>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <router-link to="/revenue" class="nav-link" >
+                <span ><font-awesome-icon :icon="['fas', 'chart-simple']" /> Thống kê doanh thu</span>
+            </router-link>
+        </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <router-link to="/product" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý sản phẩm</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/category" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý loại sản phẩm</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/newstype" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý loại tin</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/new" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý tin tức</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/customer" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý khách hàng</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/employee" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Quản lý nhân viên</span>
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/revenue" class="nav-link collapsed">
-                    <span class="nav-link collapsed">Thống kê doanh thu</span>
-                </router-link>
-            </li>
-           
 
-        </ul>
-        <!-- End of Sidebar -->
-
+    </ul>
+    <!-- End of Sidebar -->
 </template>
 <script >
-// import Footerbottom from './footer.vue'
-// import Content from '../../admin/index.vue'
-// import Search from '../../admin/search.vue'
-// export default {
-//     name: 'Headertop',
-//     components: {
-//         Footerbottom,
-//         Content,
-//         Search,
-//     },
-// }
+
 
 </script>
 <style scoped></style>

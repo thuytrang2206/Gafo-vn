@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('slidebars', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->string('pathimage');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('slidebars');
     }
 };

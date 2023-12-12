@@ -1,5 +1,3 @@
-
-
 <template>
     <div class="container-fluid">
         <div class="row">
@@ -9,7 +7,7 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-end">
-                <button @click="addProduct" type="button" class="btn btn-primary" >
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">
                     Thêm mới <font-awesome-icon :icon="['fas', 'plus']" />
                 </button>
 
@@ -37,13 +35,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(products, index) in product" :key="products.id">
+                            <tr v-for="(product, index) in product" :key="product.id">
                                 <td>{{ index+1 }}</td>
-                                <td>{{ products.NameProd }}</td>
+                                <td>{{ product.NameProd }}</td>
                                 <td></td>
-                                <td>{{ products.Price.toLocaleString() }}</td>
+                                <td>{{ product.Price.toLocaleString() }}</td>
                                 <td></td>
-                                <td>{{ products.Update_date }}</td>
+                                <td>{{ product.Update_date }}</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
                                         <!-- <div class="p-2">
@@ -51,12 +49,13 @@
                                                     :icon="['fas', 'eye']" /></button>
                                         </div> -->
                                         <div class="p-2">
-                                            <a href="#" @click.prevent="editProduct(products)"><font-awesome-icon
-                                                    :icon="['fas', 'pen-to-square']" /></a>
+                                            <button type="button" class="btn btn-primary"
+                                                @click.prevent="editProduct(product,index)"><font-awesome-icon
+                                                    :icon="['fas', 'pen-to-square']" /></button>
                                         </div>
                                         <div class="p-2">
                                             <button type="button" class="btn btn-danger"
-                                                @click="deleteProduct(products, index)"><font-awesome-icon
+                                                @click="deleteProduct(product, index)"><font-awesome-icon
                                                     :icon="['fas', 'trash']" /></button>
                                         </div>
                                     </div>
@@ -71,29 +70,38 @@
         <!-- Thêm mới sản phẩm -->
         <div class="row">
             <!-- Modal -->
-            <div class="modal fade modal-xl" id="createProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade modal-xl" id="createProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" 
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
 
                             <h5 class="modal-title" id="staticBackdropLabel">
-                                <span v-if="isEdit">Sửa sản phẩm</span>
-                                <span v-else>Thêm mới sản phẩm</span>
+                                <span v-if="!isEdit">Thêm mới sản phẩm</span>
+                                <span v-else>Sửa sản phẩm</span>
                             </h5>
 
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                             ></button>
+                                @click="Cancel"></button>
                         </div>
-
-                        <Form ref="form" @submit="handleSubmit" :validation-schema="isEdit?editschema:createschema" v-slot="{ errors }" :initial-values="formValues">
+                        <div class="alert alert-danger alert-dismissible" role="alert" v-if="error">
+                            <b>{{ error.message }}</b>
+                            <ul>
+                                <li v-for="(errorName, index) in error.errors" :key="index">
+                                    {{ errorName[0] }}
+                                </li>
+                            </ul>
+                            <button type="button" class="close" @click="error = null">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="form-data">
                         <div class="modal-body">
                             <div class="d-flex flex-column">
                                 <div class="p-2">
                                     <div class="input-group">
                                         <span class="input-group-text">Tên sản phẩm</span>
-                                        <Field type="text" name="NameProd"  id="NameProd" class="form-control" :class="{'is-invalid':errors.NameProd}"/>
-                                        <span class="invalid-feedback">{{ errors.NameProd }}</span>
+                                        <input type="text" v-model="listprd.NameProd" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -101,13 +109,13 @@
                                 <div class="p-2">
                                     <div class="input-group">
                                         <span class="input-group-text">Giá sản phẩm</span>
-                                        <Field type="number" name="Price" id="Price" class="form-control"/>
+                                        <input type="number" v-model="listprd.Price" class="form-control">
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="input-group">
                                         <span class="input-group-text">Số lượng</span>
-                                        <Field type="number" name="Count" id="Count" class="form-control"/>
+                                        <input type="number" v-model="listprd.Count" class="form-control">
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -142,12 +150,14 @@
                                 </div> -->
                             </div>
                         </div>
-                        
+                        </form>
                         <div class="modal-footer">
 
-                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <button type="button" v-show="!isEdit" @click="createProduct" class="btn btn-primary">Tạo
+                                mới</button>
+                            <button type="button" v-show="isEdit" @click="updateProduct" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Sửa</button>
                         </div>
-                    </Form>
                     </div>
                 </div>
             </div>
@@ -156,76 +166,91 @@
     </div>
 </template>
 
-<script setup >
-import { ref, onMounted, reactive} from 'vue';
-import {Form , Field} from 'vee-validate';
-import * as yup from 'yup';
-const product= ref([]);
-const isEdit= ref(false);
-const formValues= ref();
-const form = ref(null)
-const getdata = () =>{
-    axios.get('product')
-    .then((response)=>{
-        product.value= response.data
-    })
-};
-onMounted(() => {
-  getdata();
-});
-const addProduct=()=>{
-    isEdit.value= false;
-    $('#createProductModal').modal('show');
-}
-const createschema= yup.object({
-    NameProd:yup.string().required(),
-}).required();
-const editschema= yup.object({
-    NameProd:yup.string().required(),
-}).required();
-const createProduct=(value,{resetForm})=>{
-    axios.post('product',value)
-    .then((response)=>{
-        product.value.unshift(response.data)
-        $('#createProductModal').modal('hide');
-        resetForm();
-    })
-}
-const editProduct=(products)=>{
-    isEdit.value= true;
-    form.value.resetForm();
-    $('#createProductModal').modal('show');
-    formValues.value={
-       NameProd: products.NameProd
-    } ;
-    
-}
-const handleSubmit=(products)=>{
-    if(isEdit.value){
-        updateProduct(products)
+<script>
+
+export default {
+
+    data() {
+        return {
+            product: [],
+            listprd: {
+                NameProd: '',
+                Price: 0,
+                Count: 0,
+            },
+            error: null,
+            
+        }
+    },
+    created() {
+        this.getdata()
+    },
+    // mounted() {
+    //     this.getdata()
+    // },
+    methods: {
+        async createProduct() {
+            try {
+                this.isEdit = false;
+                const response = await axios.post('product', {
+                    NameProd: this.listprd.NameProd,
+                    Price: this.listprd.Price,
+                    Count: this.listprd.Count,
+                })
+                $('#createProductModal').modal('hide');
+                this.getdata();
+                // reset giá trị form về ban đầu
+                this.listprd = {
+                    NameProd: '',
+                    Price: 0,
+                    Count: 0,
+                }
+            } catch (error) {
+                this.error = error.response.data
+            }
+        },
+        async getdata() {
+            try {
+                const response = await axios.get('product')
+                this.product = response.data
+                this.isEdit = false;
+            } catch (error) {
+                this.error = error.response.data
+            }
+        },
+        editProduct(product,index) {
+            this.isEdit = true;
+            $('#createProductModal').modal('show');
+            this.editProduct = { ...product }
+            this.listprd.NameProd = product.NameProd;
+            this.listprd.Price = product.Price;
+            this.listprd.Count = product.Count;
+        },
+        async updateProduct() {
+            const response = await axios.put('product/'+ this.editProduct.id, {
+                NameProd: this.listprd.NameProd,
+                Price: this.listprd.Price,
+                Count: this.listprd.Count,
+            })
+            this.product[this.editProduct.index] = response.data
+            this.isEdit=false
+            //this.getdata()
+            location.reload()
+        },
+        async deleteProduct(product, index) {
+            try {
+                await axios.delete('product/' + product.id)
+                this.product.splice(index, 1)
+            } catch (error) {
+                this.error = error.response.data
+            }
+        },
+        Cancel(){
+            location.reload()
+            this.getdata()
+        }
     }
-    else{
-        createProduct(products)
-    }
 }
-const updateProduct=(products)=>{
-    axios.put('product/'+ formValues.value.id)
-    .then((response)=>{
-        const index= product.value.findIndex(products=>product.id===response.data.id);
-        product.value[index]=response.data;
-        $('#createProductModal').modal('hide');
-    })
-}
-// const createProduct=()=>{
-//     axios.post('product',form)
-//     .then((response)=>{
-//         product.value.push(response.data)
-//         form.NameProd='';
-//         form.Price=0;
-//         form.Count=0;
-//         $('#createProductModal').modal('hide');
-//     })
-// }
 </script>
 
 <style lang="scss" scoped></style>

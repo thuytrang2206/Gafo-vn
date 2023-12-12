@@ -7,6 +7,7 @@ import Customer from '../admin/customer.vue'
 import New from '../admin/new.vue'
 import Newstype from '../admin/newstype.vue'
 import Revenue from '../admin/revenue.vue'
+import Slidebar from '../admin/slidebar.vue'
 
 const routes = [
   {
@@ -48,6 +49,10 @@ const routes = [
   {
     path: '/revenue',
     component: Revenue
+  },
+  {
+    path: '/slidebar',
+    component: Slidebar
   },
   {
     path: '/:catchAll(.*)',
