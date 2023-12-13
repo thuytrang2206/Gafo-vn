@@ -10,9 +10,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createimageModal">
                     Thêm mới <font-awesome-icon :icon="['fas', 'plus']" />
                 </button>
-
             </div>
-
         </div>
         <br>
         <!-- DataTales Example -->
@@ -29,12 +27,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(image, index) in image" :key="image.id">
+                            <tr v-for="(image, index) in images" :key="image.id">
                                 <td>{{ index + 1 }}</td>
                                 <td>
-                                    <!-- <img :src="{{ image.pi }}" alt=""> -->
+                                    <img :src="image.pathimage" style="    width: 100px;height: 100px;">
                                 </td>
-                                <td>{{ image.title  }}</td>
+                                <td>{{ image.title }}</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
                                         <!-- <div class="p-2">
@@ -42,8 +40,8 @@
                                                     :icon="['fas', 'eye']" /></button>
                                         </div> -->
                                         <div class="p-2">
-                                            <button type="button" class="btn btn-primary"
-                                                @click.prevent="editImage(image, index)"><font-awesome-icon
+                                            
+                                            <button type="button" @click.prevent="editImage(image, index)" class="btn btn-primary"><font-awesome-icon
                                                     :icon="['fas', 'pen-to-square']" /></button>
                                         </div>
                                         <div class="p-2">
@@ -60,7 +58,7 @@
             </div>
         </div>
 
-        <!-- Thêm mới sliderbar-->
+        <!-- Thêm mới/Sửa sliderbar-->
         <div class="row">
             <!-- Modal -->
             <div class="modal fade modal-xl" id="createimageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -68,12 +66,9 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-
                             <h5 class="modal-title" id="staticBackdropLabel">
                                 <span v-if="!isEdit">Thêm mới sliderbar</span>
-                                <span v-else>Sửa sliderbar</span>
                             </h5>
-
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 @click="Cancel"></button>
                         </div>
@@ -88,42 +83,71 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="form-data">
+                        <form id="form-data" @submit.prevent="submitForm" enctype="multipart/form-data">
                             <div class="modal-body">
 
                                 <div class="d-flex">
-                                    <div class="col-4">
-                                        <div>
-                                            <input type="file" accept="image/*" @change="previewImage" class="form-control-file" id="my-file">
-                                        </div>
-                                        <br>
-
-                                        <input type="text" class="form-control" v-model="listimage.title" >
-                                        <br>
-                                    </div>
-                                    <div class="col-8">
-                                        <div> 
-                                            <button type="button" class="btn btn-danger" id="deleteImage"
-                                                style="float: right;"><font-awesome-icon
-                                                    :icon="['fas', 'xmark']" /></button>
-
+                                    <div class="card p-3 shadow" style="width:auto;">
+                                        <nav>
+                                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#nav-home" type="button" role="tab"
+                                                    aria-controls="nav-home" aria-selected="true">Tải file</button>
+                                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#nav-profile" type="button" role="tab"
+                                                    aria-controls="nav-profile" aria-selected="false">Media</button>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content p-3 border bg-light" id="nav-tabContent"
+                                            style="height:500 ; width: 1038px;">
+                                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                                                aria-labelledby="nav-home-tab">
+                                                <div>
+                                                    <input type="file" name="file" id="file" class="input-file"
+                                                        v-on:change="previewImage">
+                                                    <label for="file" class="btn btn-tertiary js-labelFile">
+                                                        <i class="icon fa fa-check"></i>
+                                                        <span class="js-fileName">Choose a file</span>
+                                                    </label>
+                                                    <div>
+                                                        <br>
+                                                        <div class="input-group flex-nowrap">
+                                                            <span class="input-group-text" id="addon-wrapping">Tên
+                                                                ảnh</span>
+                                                            <input type="text" class="form-control" v-model="title"
+                                                                aria-describedby="addon-wrapping">
+                                                        </div>
+                                                        <br>
+                                                        <div class="image d-flex">
+                                                            <div class="p-2">
+                                                            <img :src="preview" class="img-fluid" style="width: 100px; height: 100px;"/>
+                                                            </div>
+                                                            <div class="p-2">
+                                                                {{ file.name }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                        <div class="image">
-                                            <img :src="preview" class="img-fluid" style="width: 530px;height: 400px;" />
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                                aria-labelledby="nav-profile-tab">
+                                                <div class="d-flex">
+                                                    <div class="p-2" v-for="image in images" :key="image.id">
+                                                            <img :src="image.pathimage" class=" img-thumbnail" style="width: 100px; height: 100px;"/>
+                                                    </div>  
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" v-show="!isEdit" class="btn btn-success">Tạo
+                                    mới</button>
+                                <button type="submit" v-show="isEdit" class="btn btn-success">Sửa</button>
                             </div>
                         </form>
-                        <div class="modal-footer">
-
-                            <button type="button" v-show="!isEdit" @click="addImage" class="btn btn-success">Tạo
-                                mới</button>
-                            <button type="button" v-show="isEdit" @click="updateimage" class="btn btn-success"
-                                data-bs-dismiss="modal">Sửa</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -133,67 +157,98 @@
 </template>
 
 <script>
-
 export default {
 
     data() {
         return {
 
-            listimage: {
-                title: '',
-                file:null
-            },
+            // listimage: {
+            //     title: '',
+            //     file:''
+            // },
+            title: '',
+            file: '',
             error: null,
             preview: null,
-            image: null,
+            images: {}
         }
     },
-    created() {
-        this.getdata()
-    },
-    // mounted() {
+    // created() {
     //     this.getdata()
     // },
+    mounted() {
+        this.getdata()
+    },
     methods: {
-
-            previewImage: function(event) {
-        var input = event.target;
-        if (input.files) {
-            var reader = new FileReader();
-            reader.onload = (e) => {
-            this.preview = e.target.result;
-            }
-            this.image=input.files[0];
-            reader.readAsDataURL(input.files[0]);
-            $(".image").show();
-        }
-        },
-        async addImage() {
-            try {
-                const response = await axios.post('slidebar', {
-                    title: this.listimage.title,
-                })
-                $('#createimageModal').modal('hide');
-                this.getdata();
-                // reset giá trị form về ban đầu
-                this.listimage = {
-                    title:'',
-                    file:''
+        previewImage: function (event) {
+            var input = event.target;
+            if (input.files) {
+                var reader = new FileReader();
+                reader.onload = (e) => {
+                    this.preview = e.target.result;
                 }
+                this.file = input.files[0];
+                reader.readAsDataURL(input.files[0]);
+                $(".image").show();
+            }
+        },
+        async submitForm(event) {
+            event.preventDefault();
+            let currentObj = this;
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+            let formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('title',this.title);
+            if(isEdit==false){
+                axios.post('slidebar', formData, config)
+                .then(function (response) {
+                    // currentObj.success = response.data.success;
+                    $('#createimageModal').modal('hide');
+                    this.getdata();
+                    location.reload();
+                    this.title = '';
+                    this.file = '';
+                    // location.reload()
+                })
+                .catch(function (error) {
+                    //currentObj.output = error;
+                });
+            }
+            else{
+                axios.put('slidebar' + this.editImage.id, formData, config)
+                .then(function (response) {
+                    // currentObj.success = response.data.success;
+                    $('#createimageModal').modal('hide');
+                    this.images[this.editImage.index] = response.data
+                    this.isEdit=false
+                    location.reload();
+                })
+                .catch(function (error) {
+                    //currentObj.output = error;
+                });
+            }
+           
+        },
+
+        async getdata() {
+            try {
+                const response = await axios.get('slidebar')
+                $(".image").hide();
+                $("#deleteImage").hide();
+                this.images = response.data
+                this.isEdit = false;
             } catch (error) {
                 this.error = error.response.data
             }
         },
-        async getdata() {
-                try {
-                    const response = await axios.get('slidebar')
-                    $(".image").hide();
-                    $("#deleteImage").hide();
-                    this.image = response.data
-                    //this.isEdit = false;
-                } catch (error) {
-                    this.error = error.response.data
-                }
+
+        editImage(image,index) {
+            this.isEdit = true;
+            $('#createimageModal').modal('show');
+            this.editImage = { ...image }
+            this.title = image.title;
         },
         //     editimage(image,index) {
         //         this.isEdit = true;
@@ -210,14 +265,14 @@ export default {
         //         //this.getdata()
         //         location.reload()
         //     },
-        //     async deleteimage(image, index) {
-        //         try {
-        //             await axios.delete('image/' + image.id)
-        //             this.image.splice(index, 1)
-        //         } catch (error) {
-        //             this.error = error.response.data
-        //         }
-        //     },
+        async deleteImage(image, index) {
+                try {
+                    await axios.delete('slidebar/' + image.id)
+                    this.images.splice(index, 1)
+                } catch (error) {
+                    this.error = error.response.data
+                }
+        },
         //     Cancel(){
         //         location.reload()
         //         this.getdata()
@@ -226,4 +281,51 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.btn-tertiary {
+    color: #555;
+    padding: 0;
+    line-height: 40px;
+    width: 300px;
+    margin: auto;
+    display: block;
+    border: 2px solid #555;
+
+    &:hover,
+    &:focus {
+        color: lighten(#555, 20%);
+        border-color: lighten(#555, 20%);
+    }
+}
+
+/* input file style */
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+    +.js-labelFile {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 0 10px;
+        cursor: pointer;
+
+        .icon:before {
+            //font-awesome
+            content: "\f093";
+        }
+
+        &.has-file {
+            .icon:before {
+                //font-awesome
+                content: "\f00c";
+                color: #5AAC7B;
+            }
+        }
+    }
+}</style>

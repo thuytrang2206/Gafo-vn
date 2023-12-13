@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <!-- Thêm mới sản phẩm -->
+        <!-- Thêm mới/Sửa sản phẩm -->
         <div class="row">
             <!-- Modal -->
             <div class="modal fade modal-xl" id="createProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" 
