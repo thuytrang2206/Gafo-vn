@@ -40,8 +40,9 @@
                                                     :icon="['fas', 'eye']" /></button>
                                         </div> -->
                                         <div class="p-2">
-                                            
-                                            <button type="button" @click.prevent="editImage(image, index)" class="btn btn-primary"><font-awesome-icon
+
+                                            <button type="button" @click.prevent="editImage(image, index)"
+                                                class="btn btn-primary"><font-awesome-icon
                                                     :icon="['fas', 'pen-to-square']" /></button>
                                         </div>
                                         <div class="p-2">
@@ -83,7 +84,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="form-data" @submit.prevent="submitForm" enctype="multipart/form-data">
+                        <form id="form-data" enctype="multipart/form-data">
                             <div class="modal-body">
 
                                 <div class="d-flex">
@@ -120,7 +121,8 @@
                                                         <br>
                                                         <div class="image d-flex">
                                                             <div class="p-2">
-                                                            <img :src="preview" class="img-fluid" style="width: 100px; height: 100px;"/>
+                                                                <img :src="preview" class="img-fluid"
+                                                                    style="width: 100px; height: 100px;" />
                                                             </div>
                                                             <div class="p-2">
                                                                 {{ file.name }}
@@ -133,8 +135,9 @@
                                                 aria-labelledby="nav-profile-tab">
                                                 <div class="d-flex">
                                                     <div class="p-2" v-for="image in images" :key="image.id">
-                                                            <img :src="image.pathimage" class=" img-thumbnail" style="width: 100px; height: 100px;"/>
-                                                    </div>  
+                                                        <img :src="image.pathimage" class=" img-thumbnail"
+                                                            style="width: 100px; height: 100px;" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,9 +146,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" v-show="!isEdit" class="btn btn-success">Tạo
+                                <button type="button" v-show="!isEdit" @click.prevent="addImage" class="btn btn-success">Tạo
                                     mới</button>
-                                <button type="submit" v-show="isEdit" class="btn btn-success">Sửa</button>
+                                <button type="submit" v-show="isEdit" @click.prevent="updateImage"
+                                    class="btn btn-success">Sửa</button>
                             </div>
                         </form>
                     </div>
@@ -170,7 +174,8 @@ export default {
             file: '',
             error: null,
             preview: null,
-            images: {}
+            images: {},
+            pathname: '',
         }
     },
     // created() {
@@ -192,7 +197,7 @@ export default {
                 $(".image").show();
             }
         },
-        async submitForm(event) {
+        async addImage(event) {
             event.preventDefault();
             let currentObj = this;
             const config = {
@@ -200,9 +205,8 @@ export default {
             }
             let formData = new FormData();
             formData.append('file', this.file);
-            formData.append('title',this.title);
-            if(isEdit==false){
-                axios.post('slidebar', formData, config)
+            formData.append('title', this.title);
+            axios.post('slidebar', formData, config)
                 .then(function (response) {
                     // currentObj.success = response.data.success;
                     $('#createimageModal').modal('hide');
@@ -215,23 +219,7 @@ export default {
                 .catch(function (error) {
                     //currentObj.output = error;
                 });
-            }
-            else{
-                axios.put('slidebar' + this.editImage.id, formData, config)
-                .then(function (response) {
-                    // currentObj.success = response.data.success;
-                    $('#createimageModal').modal('hide');
-                    this.images[this.editImage.index] = response.data
-                    this.isEdit=false
-                    location.reload();
-                })
-                .catch(function (error) {
-                    //currentObj.output = error;
-                });
-            }
-           
         },
-
         async getdata() {
             try {
                 const response = await axios.get('slidebar')
@@ -244,34 +232,30 @@ export default {
             }
         },
 
-        editImage(image,index) {
+        editImage(image, index) {
             this.isEdit = true;
             $('#createimageModal').modal('show');
             this.editImage = { ...image }
             this.title = image.title;
+            this.preview = image.pathimage;
         },
-        //     editimage(image,index) {
-        //         this.isEdit = true;
-        //         $('#createimageModal').modal('show');
-        //         this.editimage = { ...image }
-        //         this.listcate.TypeTittle = image.TypeTittle;
-        //     },
-        //     async updateimage() {
-        //         const response = await axios.put('image/'+ this.editimage.id, {
-        //             TypeTittle: this.listcate.TypeTittle,
-        //         })
-        //         this.image[this.editimage.index] = response.data
-        //         this.isEdit=false
-        //         //this.getdata()
-        //         location.reload()
-        //     },
+        async updateImage() {
+            const response = await axios.put('slidebar/' + this.editImage.id, {
+                title: this.title,
+                file: this.file
+            })
+            this.images[this.editImage.index] = response.data
+            this.isEdit = false
+            //this.getdata()
+            location.reload()
+        },
         async deleteImage(image, index) {
-                try {
-                    await axios.delete('slidebar/' + image.id)
-                    this.images.splice(index, 1)
-                } catch (error) {
-                    this.error = error.response.data
-                }
+            try {
+                await axios.delete('slidebar/' + image.id)
+                this.images.splice(index, 1)
+            } catch (error) {
+                this.error = error.response.data
+            }
         },
         //     Cancel(){
         //         location.reload()

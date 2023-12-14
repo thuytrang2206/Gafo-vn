@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SlidebarController;
+use App\Http\Controllers\Backend\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,3 +36,7 @@ Route::get('/slidebar', [SlidebarController::class, 'slidebar']);
 Route::post('/slidebar', [SlidebarController::class, 'store']);
 Route::delete('/slidebar/{id}',[SlidebarController::class, 'destroy']);
 Route::put('/slidebar/{id}',[SlidebarController::class, 'update']);
+
+//post
+Route::get('/postnew',[PostController::class,'postnew']);
+Route::post('/postadd', [SlidebarController::class, 'store']);

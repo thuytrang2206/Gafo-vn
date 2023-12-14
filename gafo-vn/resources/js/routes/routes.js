@@ -4,8 +4,7 @@ import Product from '../admin/product/product.vue'
 import Category from '../admin/category.vue'
 import Employee from '../admin/employee.vue'
 import Customer from '../admin/customer.vue'
-import New from '../admin/new.vue'
-import Newstype from '../admin/newstype.vue'
+import Post from '../admin/post.vue'
 import Revenue from '../admin/revenue.vue'
 import Slidebar from '../admin/slidebar.vue'
 
@@ -39,13 +38,10 @@ const routes = [
     component: Customer
   },
   {
-    path: '/new',
-    component: New
+    path: '/post',
+    component: Post
   },
-  {
-    path: '/newstype',
-    component: Newstype
-  },
+
   {
     path: '/revenue',
     component: Revenue

@@ -1,15 +1,13 @@
 <template>
     <div class="container-fluid">
         <div class="row" style="border: solid 1px #5555556b;">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="d-flex">
                 <div class="p-2"> <strong>Loại tin </strong></div>
                 <div class="p-2">
-                    <select id="js-select2" class="">
+                    <select id="selectPostType"  >
                         <option value="0">Chọn loại tin </option>
-                        <option>Kiến thức dinh dưỡng</option>
-                        <option>Hỏi đáp dinh dưỡng</option>
-                        <option>Tư vấn dinh dưỡng</option>
+                        <option v-for='data in listposttype' :value='data.id' :key="data.id">{{ data.name }}</option>
                     </select>
                 </div>
                 <div class="p-2">
@@ -21,8 +19,8 @@
             </div>
             <div class="col-6 collapse" id="collapseExample">
                 <div class="d-flex addtype" id="collapseExample">
-                    <div class="p-2"><input type="text" class="form-control form-control-sm" v-model="name"> </div>
-                    <div class="p-2"><button type="button" @click="saveType" class="btn btn-outline-success btn-sm">Lưu</button></div>
+                    <div class="p-2"><input type="text" class="form-control form-control-sm" v-model="posttype.name" > </div>
+                    <div class="p-2"><button type="button" @click="savePostType" class="btn btn-outline-success btn-sm">Lưu</button></div>
             </div>
             </div>
            
@@ -77,39 +75,49 @@
 <script>
 
 export default {
-    // data:{
-    //     return:{
-    //         name:'',
-    //         listposttype:[]
-    //     }
-    // },
-    // method: {
-    //     // async saveType(){
-    //     //     try {
-    //     //         const response = await axios.post('product', {
-    //     //             name: this.name,
-    //     //         })
-    //     //         this.getPostType();
-    //     //         // reset giá trị form về ban đầu
-    //     //        this.name='';
-    //     //     } catch (error) {
-    //     //         this.error = error.response.data
-    //     //     }
-    //     // },
-    //     // async getPostType(){
-    //     //     try {
-    //     //         const response = await axios.get('posttype')
-    //     //         this.name = response.data
-    //     //     } catch (error) {
-    //     //         this.error = error.response.data
-    //     //     }
-    //     // }
-    // }
+    data() {
+        return {
+            listposttype: [],
+            posttype: {
+                name:''
+            },
+        }
+    },
+    created() {
+        this.getPostType()
+    },
+    methods: {
+        async getPostType(){
+           try {
+                const response = await axios.get('postnew')
+                this.listposttype = response.data
+            } catch (error) {
+                this.error = error.response.data
+            }
+        },
+        async savePostType(){
+            try {
+                const response = await axios.post('postadd', {
+                    name: this.posttype.name,
+                })
+                this.getPostType();
+                // reset giá trị form về ban đầu
+                this.posttype = {
+                    name: '',
+                }
+            } catch (error) {
+                this.error = error.response.data
+            }
+        }
+    },
 
 }
 </script>
 
 <style lang="scss" scoped>
+#selectPostType{
+    width: 300px;
+}
 .infopost {
     min-width: 1000px;
 }

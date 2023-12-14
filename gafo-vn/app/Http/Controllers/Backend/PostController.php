@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ProductType;
+use App\Models\PostType;
 use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function category()
+    public function postnew()
     {
-        $result= DB::table('producttype')->get();
+        $result= DB::table('post_type')->get();
         return response()->json($result);
     }
 
@@ -38,12 +38,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $product = ProductType::create([
-            'TypeTittle'     => $request->input('TypeTittle'),
-            // 'Describes'=>$request->input('Describes'),
+        $posttype = PostType::create([
+            'name'     => $request->input('name'),
         ]);
-        //$product->save();
-        return response()->json($product);
+        return response()->json($posttype);
     }
 
     /**
@@ -77,14 +75,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoty = ProductType::find($id);
-
-        $categoty->TypeTittle =  $request->input('TypeTittle');
-        $categoty->save();
-    
-        return response([
-            'categoty' => $categoty
-        ], 200);
+        //
     }
 
     /**
@@ -95,10 +86,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categoty = ProductType::find($id);
-        $categoty->delete();
-        return response([
-            'result' => 'success'
-        ], 200);
+        //
     }
 }

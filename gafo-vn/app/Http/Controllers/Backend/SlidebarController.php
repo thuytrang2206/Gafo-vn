@@ -72,7 +72,7 @@ class SlidebarController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -85,10 +85,10 @@ class SlidebarController extends Controller
     public function update(Request $request, $id)
     {
         $slidebar = Slidebar::find($id);
-        $fileName = time().'.'.$request->file->getClientOriginalExtension();
-        $file_path=  $request->file->move(public_path('uploads'), $fileName);
+        // $fileName = time().'.'.$request->file('file')->getClientOriginalExtension();
+         $file_path=  $request->file->move(public_path('uploads'), $request->pathimage);
         $delimiter = 'public';
-        $pathstr= Str::after($file_path, 'public');
+        // $pathstr= Str::after($file_path, 'public');
         $slidebar->title =  $request->input('title');
         $slidebar->pathimage=$pathstr;
         $slidebar->save();

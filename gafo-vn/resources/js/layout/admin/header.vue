@@ -41,11 +41,8 @@
                     <router-link to="/category" class="collapse-item">
                         <span >Loại sản phẩm</span>
                     </router-link>
-                    <router-link to="/newstype" class="collapse-item">
-                        <span >Loại tin</span>
-                    </router-link>
-                    <router-link to="/new" class="collapse-item">
-                        <span >Tin tức</span>
+                    <router-link to="/post" class="collapse-item">
+                        <span >Bài viết</span>
                     </router-link>
                     <router-link to="/customer" class="collapse-item">
                         <span >Khách hàng</span>
