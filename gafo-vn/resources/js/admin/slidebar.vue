@@ -35,19 +35,13 @@
                                 <td>{{ image.title }}</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <!-- <div class="p-2">
-                                            <button type="button" class="btn btn-info"><font-awesome-icon
-                                                    :icon="['fas', 'eye']" /></button>
-                                        </div> -->
                                         <div class="p-2">
-
-                                            <button type="button" @click.prevent="editImage(image, index)"
-                                                class="btn btn-primary"><font-awesome-icon
+                                            <button type="button" class="btn btn-primary" @click.prevent="editImage(image)"><font-awesome-icon
                                                     :icon="['fas', 'pen-to-square']" /></button>
                                         </div>
                                         <div class="p-2">
-                                            <button type="button" class="btn btn-danger"
-                                                @click="deleteImage(image, index)"><font-awesome-icon
+                                           
+                                            <button type="button" class="btn btn-danger"  @click="deleteImage(image,index)" ><font-awesome-icon
                                                     :icon="['fas', 'trash']" /></button>
                                         </div>
                                     </div>
@@ -170,12 +164,15 @@ export default {
             //     title: '',
             //     file:''
             // },
+            id:'',
             title: '',
             file: '',
+            editfile:'',
             error: null,
             preview: null,
             images: {},
             pathname: '',
+
         }
     },
     // created() {
@@ -232,18 +229,23 @@ export default {
             }
         },
 
-        editImage(image, index) {
+        editImage(image) {
             this.isEdit = true;
             $('#createimageModal').modal('show');
             this.editImage = { ...image }
             this.title = image.title;
+            this.id= image.id
             this.preview = image.pathimage;
         },
         async updateImage() {
-            const response = await axios.put('slidebar/' + this.editImage.id, {
-                title: this.title,
-                file: this.file
-            })
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+            let formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('title', this.title);
+            formData.append("_method","PUT");
+            const response = await axios.post('slidebar/' + this.editImage.id, formData,config)
             this.images[this.editImage.index] = response.data
             this.isEdit = false
             //this.getdata()

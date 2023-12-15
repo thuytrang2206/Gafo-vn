@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PostType extends Model
 {
     use HasFactory;
-    protected $table = 'post_type';
-    protected $fillable = ['name'];
+    protected $table = 'posttype';
+    protected $fillable = ['nametype'];
     public $timestamps = false;
 }

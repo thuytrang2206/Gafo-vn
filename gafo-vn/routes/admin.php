@@ -38,5 +38,6 @@ Route::delete('/slidebar/{id}',[SlidebarController::class, 'destroy']);
 Route::put('/slidebar/{id}',[SlidebarController::class, 'update']);
 
 //post
-Route::get('/postnew',[PostController::class,'postnew']);
-Route::post('/postadd', [SlidebarController::class, 'store']);
+Route::get('/post',[PostController::class,'postnew']);
+Route::post('/post', [PostController::class, 'store']);
+Route::post("/postcreate", [PostController::class, "createpost"]);

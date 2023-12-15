@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function postnew()
     {
-        $result= DB::table('post_type')->get();
+        $result= DB::table('posttype')->get();
         return response()->json($result);
     }
 
@@ -29,7 +29,18 @@ class PostController extends Controller
     {
         //
     }
-
+    public function createpost(Request $request)
+    {
+        $post = Post::create([
+            'title'     => $request->input('title'),
+            'contentpost'=>$request->input('contentpost'),
+            'typepost'=>$request->input('contentpost'),
+           // 'linkurl'=>$request->input('contentpost'),
+            'logo'=>$request->input('logo'),
+            //'contentpost'=>$request->input('contentpost'),
+        ]);
+        return response()->json($post);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -39,7 +50,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $posttype = PostType::create([
-            'name'     => $request->input('name'),
+            'nametype'     => $request->input('nametype'),
         ]);
         return response()->json($posttype);
     }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Slidebar;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class SlidebarController extends Controller
 {
@@ -39,18 +41,16 @@ class SlidebarController extends Controller
      */
     public function store(Request $request)
     {
-        //  if($request->file()) {
-            //   $file_name = time().'_'.$request->file('file')->getClientOriginalName();
-            //   $file_path = $request->file('file')->storeAs('uploads', $file_name, 'public');
-            $fileName = time().'.'.$request->file->getClientOriginalExtension();
-            $file_path=  $request->file->move(public_path('uploads'), $fileName);
-            $delimiter = 'public';
-            $pathstr= Str::after($file_path, 'public');
-            $fileUpload =  Slidebar ::create([
-                'title'     => $request->input('title'),
-                'pathimage' =>$pathstr
-            ]);
-        return response()->json($fileUpload);
+        $image= $request->file;
+        $extention=$request->file->getClientOriginalExtension();
+        $name = time().'.'.$request->file->getClientOriginalName();
+        Storage::disk('public')->put($name,File::get($image));
+        $pathname="\uploads\\".''.$name;
+        $fileUpload =  Slidebar ::create([
+            'title'     => $request->input('title'),
+            'pathimage' =>$pathname
+        ]);
+    return response()->json($fileUpload);
     }
 
     /**
@@ -85,12 +85,17 @@ class SlidebarController extends Controller
     public function update(Request $request, $id)
     {
         $slidebar = Slidebar::find($id);
-        // $fileName = time().'.'.$request->file('file')->getClientOriginalExtension();
-         $file_path=  $request->file->move(public_path('uploads'), $request->pathimage);
-        $delimiter = 'public';
-        // $pathstr= Str::after($file_path, 'public');
         $slidebar->title =  $request->input('title');
-        $slidebar->pathimage=$pathstr;
+        // Storage::disk('public')->delete($slidebar->file);
+        if($request->file){
+            // unlink("public/uploads/".$id->file);
+            $image= $request->file;
+        $extention=$request->file->getClientOriginalExtension();
+        $name = time().'.'.$request->file->getClientOriginalName();
+        Storage::disk('public')->put($name,File::get($image));
+        $pathname="\uploads\\".''.$name;
+        $slidebar->pathimage=$pathname;
+        }
         $slidebar->save();
     
         return response([

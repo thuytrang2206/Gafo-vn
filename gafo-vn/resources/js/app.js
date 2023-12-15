@@ -6,7 +6,7 @@ import './bootstrap.js';
 import { FontAwesomeIcon } from '../../node_modules/@fortawesome/vue-fontawesome';
 import { library } from "../../node_modules/@fortawesome/fontawesome-svg-core";
 import { fas } from '../../node_modules/@fortawesome/free-solid-svg-icons';
-
+import CKEditor from '@ckeditor/ckeditor5-vue';
 // import DataTablesLib from '../../node_modules/datatables.net'; 
 // import DataTable from '../../node_modules/datatables.net-vue3/src/datatables.net-vue.vue';
  
@@ -25,5 +25,6 @@ const router =  VueRouter.createRouter({
 
 const appAdmin = createApp(App);
 appAdmin.component('font-awesome-icon', FontAwesomeIcon);
+appAdmin.component('CKEditor',CKEditor);
 appAdmin.use(router).mount('#admin');
 //createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#admin')
